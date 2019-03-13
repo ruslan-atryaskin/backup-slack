@@ -194,7 +194,11 @@ class SlackHistory(object):
         """Returns a list of direct message threads."""
         threads = []
         for t in self.slack.im.list().body['ims']:
-            t['username'] = self.usernames[t['user']]
+            if t['user'] in self.usernames:            
+                t['username'] = self.usernames[t['user']]
+            else:
+                t['username'] = t['user']
+                
             threads.append(t)
         return threads
 
